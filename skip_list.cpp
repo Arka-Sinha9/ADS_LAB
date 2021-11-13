@@ -20,6 +20,22 @@ struct skipnode
     }
 };
 
+float frand()
+{
+    return (float) rand() / RAND_MAX;
+}
+
+int random_level()
+{
+    static bool first = true;
+    if (first)
+    {
+        srand((unsigned)time(NULL));
+        first = false;
+    }
+    int lvl = (int)(log(frand()) / log(1.-P));
+    return lvl < Max_level ? lvl : Max_level;
+}
 
 struct skiplist
 {
@@ -39,26 +55,6 @@ struct skiplist
     void deleteElement(int &);
     void insertElement(int &);
 };
-
-float frand()
-{
-    return (float) rand() / RAND_MAX;
-}
-
-
-int random_level()
-{
-    static bool first = true;
-    if (first)
-    {
-        srand((unsigned)time(NULL));
-        first = false;
-    }
-    int lvl = (int)(log(frand()) / log(1.-P));
-    return lvl < Max_level ? lvl : Max_level;
-}
-
-
 
 void skiplist::insertElement(int &val)
 {
@@ -94,7 +90,6 @@ void skiplist::insertElement(int &val)
         }
     }
 }
-
 
  void skiplist::deleteElement(int &val)
 {
@@ -140,7 +135,6 @@ bool skiplist::searchElement(int &s_value)
     return x != NULL && x->value == s_value;
 }
 
-
 void skiplist::displayNodes()
 {
     for (int i = 0;i <= level; i++)
@@ -155,7 +149,6 @@ void skiplist::displayNodes()
     }
 }
 
-
 int main()
 {
     skiplist ss;
@@ -167,17 +160,14 @@ int main()
     cout<<"5.Exit "<<endl;
     while (1)
     {
-
         cout<<"Enter your choice : ";
         cin>>choice;
         switch(choice)
         {
-
         case 1: cout<<"Enter the element to be inserted: ";
                 cin>>n;
                 ss.insertElement(n);
                 break;
-
         case 2: cout<<"Enter the element to be deleted: ";
                 cin>>n;
                 if(!ss.searchElement(n))
@@ -187,7 +177,6 @@ int main()
                 }
                 ss.deleteElement(n);
                 break;
-
         case 3:  cout<<"Enter the element to be searched: ";
                  cin>>n;
                  if(ss.searchElement(n))
@@ -195,19 +184,14 @@ int main()
                  else
                     cout<<"Element not found"<<endl;
                  break;
-
         case 4:   cout<<"Elements in list are: "<<endl;
                   ss.displayNodes();
                   break;
-
-
         case 5:   exit(1);
                   break;
-
         default:
              cout<<" Invalid option"<<endl;
         }
-
         cout<<endl;
     }
     return 0;
